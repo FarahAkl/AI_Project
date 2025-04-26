@@ -4,7 +4,12 @@
 Interactive Map Coloring Tool
 
 ### Project Description:
-This project is an interactive tool designed to solve the map coloring problem using advanced algorithms such as the **Four Color Theorem** and **Graph Coloring Algorithm**. It allows users to input regions and their borders, then automatically generates a valid coloring of the map where no two adjacent regions share the same color. The tool provides a user-friendly graphical user interface (GUI) built with Python and Tkinter, leveraging libraries like NetworkX for graph processing and Matplotlib for visualization. This application is ideal for educational purposes, geographical mapping, data analysis, and resource management.
+ This project is an interactive tool designed to solve the map coloring problem using 
+advanced algorithms such as the Four Color Theorem and Graph Coloring Algorithm . 
+Regions or nodes are represented as a graph, and different colors are assigned to each 
+region such that no two adjacent regions share the same color. The project provides an 
+easy-to-use graphical user interface (GUI) that allows users to input data about regions and 
+their borders, and automatically generates the coloring. 
 
 ### AI Algorithm:
 The project utilizes the **Greedy Coloring Algorithm** with the **Largest First strategy** to efficiently assign colors to regions while ensuring that no two adjacent regions have the same color. This algorithm ensures the use of the minimum number of colors possible, adhering to the Four Color Theorem.
