@@ -11,16 +11,16 @@ region such that no two adjacent regions share the same color. The project provi
 easy-to-use graphical user interface (GUI) that allows users to input data about regions and 
 their borders, and automatically generates the coloring. 
 
-### AI Algorithm:
+### 🤖 AI Algorithm:
 Greedy Coloring Algorithm with Largest First Strategy
 
-### YouTube Link:
-[https://www.youtube.com/watch?v=YOUR_VIDEO_ID](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)
+### 🎥 YouTube Link:
+To watch the video click [here](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)
 
 ### Project Type:
 Desktop
 
-### Used Technologies:
+### 🛠 Used Technologies:
 - **Python**: Primary programming language.
 - **Tkinter**: For creating the graphical user interface (GUI).
 - **NetworkX**: For graph representation and data processing.
@@ -28,7 +28,7 @@ Desktop
 - **Messagebox**: For displaying alerts and notifications.
 - **FigureCanvasTkAgg**: To integrate Matplotlib plots into the Tkinter interface.
 
-### Team Members:
+### 👨‍💻 Team Members:
 - Mahmoud Reda AbdelFattah AbdelRazak.
-- Mahmoud Mohamed Sayed Ahmed Sand.
-- Farah Hesham Akl.
+- Mahmoud Mohamed Sayed Ahmed Sanad.
+- Farah Hesham Mokhtar Akl.
