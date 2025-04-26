@@ -12,7 +12,7 @@ easy-to-use graphical user interface (GUI) that allows users to input data about
 their borders, and automatically generates the coloring. 
 
 ### AI Algorithm:
-The project utilizes the **Greedy Coloring Algorithm** with the **Largest First strategy** to efficiently assign colors to regions while ensuring that no two adjacent regions have the same color. This algorithm ensures the use of the minimum number of colors possible, adhering to the Four Color Theorem.
+Greedy Coloring Algorithm with Largest First Strategy
 
 ### YouTube Link:
 [https://www.youtube.com/watch?v=YOUR_VIDEO_ID](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)
