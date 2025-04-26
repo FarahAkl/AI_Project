@@ -4,17 +4,17 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-# إنشاء نافذة التطبيق
+# Create the main window
 root = tk.Tk()
 root.title("Interactive Map Coloring Tool")
-root.geometry("800x600")  # تحديد حجم النافذة
-root.configure(bg="#f0f0f0")  # خلفية النافذة
+root.geometry("800x600")   # Window size
+root.configure(bg="#f0f0f0")  # Window background
 
-# متغيرات عالمية
+# Global variables
 G = nx.Graph()
 color_map = {}
 
-# دالة لإضافة منطقة جديدة
+# Function to add a new region
 def add_region():
     region_name = region_entry.get().strip()
     if not region_name:
@@ -27,7 +27,7 @@ def add_region():
     update_graph_display()
     region_entry.delete(0, tk.END)
 
-# دالة لإضافة حد بين منطقتين
+# Function to add a border between two regions
 def add_border():
     region1 = border_entry1.get().strip()
     region2 = border_entry2.get().strip()
@@ -45,46 +45,46 @@ def add_border():
     border_entry1.delete(0, tk.END)
     border_entry2.delete(0, tk.END)
 
-# دالة لتحديث عرض الرسم البياني
+# Function to update the graph display
 def update_graph_display():
     ax.clear()
     pos = nx.spring_layout(G)
     nx.draw(G, pos, with_labels=True, node_color='lightblue', edge_color='gray', font_size=10, font_weight='bold', ax=ax)
     canvas.draw()
 
-# دالة لتلوين الخريطة
+# Function to color the map
 def color_map_func():
     global color_map
     if not G.nodes:
         messagebox.showwarning("Empty Map", "Please add regions and borders first.")
         return
-    # تطبيق خوارزمية التلوين
+    # Apply greedy coloring algorithm
     color_map = nx.coloring.greedy_color(G, strategy="largest_first")
-    # تحويل الأرقام إلى ألوان
-    colors = ['#FF5733', '#33FF57', '#3357FF', '#F3FF33']  # ألوان مشرقة
+    # Convert numbers to colors
+    colors = ['#FF5733', '#33FF57', '#3357FF', '#F3FF33']  # Bright colors
     node_colors = [colors[color_map[node]] for node in G.nodes]
-    # تحديث العرض
+    # Update the display
     ax.clear()
     pos = nx.spring_layout(G)
     nx.draw(G, pos, with_labels=True, node_color=node_colors, edge_color='gray', font_size=10, font_weight='bold', ax=ax)
     canvas.draw()
 
-# دالة لحفظ الخريطة كصورة
+# Function to save the map as an image
 def save_map():
     if not G.nodes:
         messagebox.showwarning("Empty Map", "There is no map to save.")
         return
     plt.figure(figsize=(8, 6))
     pos = nx.spring_layout(G)
-    colors = ['#FF5733', '#33FF57', '#3357FF', '#F3FF33']
+    colors = ['#FF5733', '#33FF57', '#3357FF', '#F3FF33']  # Bright colors
     node_colors = [colors[color_map[node]] for node in G.nodes]
     nx.draw(G, pos, with_labels=True, node_color=node_colors, edge_color='gray', font_size=10, font_weight='bold')
     plt.savefig("colored_map.png")
     plt.close()
     messagebox.showinfo("Save Successful", "The map has been saved as 'colored_map.png'.")
 
-# إعداد واجهة المستخدم
-# قسم الإدخال
+# Create the GUI components
+# Input Section
 input_frame = LabelFrame(root, text="Map Input", bg="#f0f0f0", font=("Arial", 12, "bold"), padx=10, pady=10)
 input_frame.pack(fill="x", padx=20, pady=10)
 
@@ -100,14 +100,14 @@ border_entry2 = tk.Entry(input_frame, width=10, font=("Arial", 10))
 border_entry2.grid(row=1, column=2, padx=5, pady=5)
 tk.Button(input_frame, text="Add", command=add_border, bg="#4CAF50", fg="white", font=("Arial", 10)).grid(row=1, column=3, padx=5, pady=5)
 
-# قسم الأزرار
+# Buttons Section
 button_frame = LabelFrame(root, text="Actions", bg="#f0f0f0", font=("Arial", 12, "bold"), padx=10, pady=10)
 button_frame.pack(fill="x", padx=20, pady=10)
 
 tk.Button(button_frame, text="Color Map", command=color_map_func, bg="#008CBA", fg="white", font=("Arial", 10), width=15).pack(side="left", padx=10)
 tk.Button(button_frame, text="Save Map", command=save_map, bg="#f44336", fg="white", font=("Arial", 10), width=15).pack(side="right", padx=10)
 
-# قسم عرض الرسم البياني
+# Graph Display Section
 graph_frame = LabelFrame(root, text="Graph Display", bg="#f0f0f0", font=("Arial", 12, "bold"), padx=10, pady=10)
 graph_frame.pack(fill="both", expand=True, padx=20, pady=10)
 
@@ -116,5 +116,5 @@ canvas = FigureCanvasTkAgg(fig, master=graph_frame)
 canvas_widget = canvas.get_tk_widget()
 canvas_widget.pack(fill="both", expand=True)
 
-# تشغيل البرنامج
+# Run the main loop
 root.mainloop()
