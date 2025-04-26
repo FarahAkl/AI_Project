@@ -9,14 +9,8 @@ This project is an interactive tool designed to solve the map coloring problem u
 ### AI Algorithm:
 The project utilizes the **Greedy Coloring Algorithm** with the **Largest First strategy** to efficiently assign colors to regions while ensuring that no two adjacent regions have the same color. This algorithm ensures the use of the minimum number of colors possible, adhering to the Four Color Theorem.
 
-### GitHub Link:
-[https://github.com/your-username/Interactive-Map-Coloring-Tool](https://github.com/your-username/Interactive-Map-Coloring-Tool)
-
 ### YouTube Link:
 [https://www.youtube.com/watch?v=YOUR_VIDEO_ID](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)
-
-### Team Image:
-![Team Image](https://example.com/team-image.jpg)
 
 ### Project Type:
 Desktop
