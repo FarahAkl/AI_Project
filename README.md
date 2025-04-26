@@ -27,3 +27,8 @@ Desktop
 - **Matplotlib**: For visualizing graphs and maps within the GUI.
 - **Messagebox**: For displaying alerts and notifications.
 - **FigureCanvasTkAgg**: To integrate Matplotlib plots into the Tkinter interface.
+
+### Team Members:
+Mahmoud Reda AbdelFattah AbdelRazak
+Mahmoud Mohamed Sayed Ahmed Sand
+Farah Hesham Akl
