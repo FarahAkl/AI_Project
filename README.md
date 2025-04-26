@@ -19,7 +19,7 @@ Greedy Coloring Algorithm with Largest First Strategy
 
 ## 🎥 YouTube Link:
 
-To watch the video click [here](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)
+To watch the video click [here](https://youtu.be/0be3nZzl2_I?si=MVJHDCoZ-O6EuZsl)
 
 ## Project Type:
 
