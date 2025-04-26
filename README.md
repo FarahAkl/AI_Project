@@ -1,10 +1,10 @@
 # AI_Project
 
-## Project Name:
+## 🗺 Project Name:
 
 Interactive Map Coloring Tool
 
-## Project Description:
+## 📌 Project Description:
 
  This project is an interactive tool designed to solve the map coloring problem using 
 advanced algorithms such as the Four Color Theorem and Graph Coloring Algorithm . 
