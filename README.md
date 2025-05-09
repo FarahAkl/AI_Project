@@ -7,7 +7,7 @@ Interactive Map Coloring Tool
 ## 📌 Project Description:
 
  This project is an interactive tool designed to solve the map coloring problem using 
-advanced algorithms such as the Four Color Theorem and Graph Coloring Algorithm . 
+advanced algorithms such as the Four Color Theorem and Constraint satisfaction problem Algorithm (CSP) . 
 Regions or nodes are represented as a graph, and different colors are assigned to each 
 region such that no two adjacent regions share the same color. The project provides an 
 easy-to-use graphical user interface (GUI) that allows users to input data about regions and 
@@ -15,7 +15,7 @@ their borders, and automatically generates the coloring.
 
 ## 🤖 AI Algorithm:
 
-Greedy Coloring Algorithm with Largest First Strategy
+Constraint satisfaction problem Algorithm (CSP)
 
 ## 🎥 YouTube Link:
 
