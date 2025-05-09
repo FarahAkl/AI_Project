@@ -7,12 +7,15 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 # Create the main window
 root = tk.Tk()
 root.title("Interactive Map Coloring Tool")
-root.geometry("800x600")   # Window size
-root.configure(bg="#f0f0f0")  # Window background
+root.geometry("800x600")
+root.configure(bg="#f0f0f0")
 
 # Global variables
 G = nx.Graph()
 color_map = {}
+
+# Available colors
+colors = ['#FF5733', '#33FF57', '#3357FF', '#F3FF33']  # 4-color map theorem
 
 # Function to add a new region
 def add_region():
@@ -52,21 +55,44 @@ def update_graph_display():
     nx.draw(G, pos, with_labels=True, node_color='lightblue', edge_color='gray', font_size=10, font_weight='bold', ax=ax)
     canvas.draw()
 
-# Function to color the map
+# CSP Backtracking Algorithm
+def is_safe(node, color, assignment):
+    for neighbor in G.neighbors(node):
+        if neighbor in assignment and assignment[neighbor] == color:
+            return False
+    return True
+
+def backtrack(assignment, nodes):
+    if len(assignment) == len(nodes):
+        return assignment
+    node = next(n for n in nodes if n not in assignment)
+    for color in range(len(colors)):
+        if is_safe(node, color, assignment):
+            assignment[node] = color
+            result = backtrack(assignment, nodes)
+            if result:
+                return result
+            del assignment[node]
+    return None
+
 def color_map_func():
     global color_map
     if not G.nodes:
         messagebox.showwarning("Empty Map", "Please add regions and borders first.")
         return
-    # Apply greedy coloring algorithm
-    color_map = nx.coloring.greedy_color(G, strategy="largest_first")
-    # Convert numbers to colors
-    colors = ['#FF5733', '#33FF57', '#3357FF', '#F3FF33']  # Bright colors
+
+    assignment = backtrack({}, list(G.nodes))
+    if assignment is None:
+        messagebox.showerror("CSP Failed", "Unable to color the map with the given colors.")
+        return
+
+    color_map = assignment
+
     node_colors = [colors[color_map[node]] for node in G.nodes]
-    # Update the display
     ax.clear()
     pos = nx.spring_layout(G)
-    nx.draw(G, pos, with_labels=True, node_color=node_colors, edge_color='gray', font_size=10, font_weight='bold', ax=ax)
+    nx.draw(G, pos, with_labels=True, node_color=node_colors, edge_color='gray',
+            font_size=10, font_weight='bold', ax=ax)
     canvas.draw()
 
 # Function to save the map as an image
@@ -76,15 +102,14 @@ def save_map():
         return
     plt.figure(figsize=(8, 6))
     pos = nx.spring_layout(G)
-    colors = ['#FF5733', '#33FF57', '#3357FF', '#F3FF33']  # Bright colors
     node_colors = [colors[color_map[node]] for node in G.nodes]
-    nx.draw(G, pos, with_labels=True, node_color=node_colors, edge_color='gray', font_size=10, font_weight='bold')
+    nx.draw(G, pos, with_labels=True, node_color=node_colors, edge_color='gray',
+            font_size=10, font_weight='bold')
     plt.savefig("colored_map.png")
     plt.close()
     messagebox.showinfo("Save Successful", "The map has been saved as 'colored_map.png'.")
 
-# Create the GUI components
-# Input Section
+# GUI Components
 input_frame = LabelFrame(root, text="Map Input", bg="#f0f0f0", font=("Arial", 12, "bold"), padx=10, pady=10)
 input_frame.pack(fill="x", padx=20, pady=10)
 
@@ -100,14 +125,12 @@ border_entry2 = tk.Entry(input_frame, width=10, font=("Arial", 10))
 border_entry2.grid(row=1, column=2, padx=5, pady=5)
 tk.Button(input_frame, text="Add", command=add_border, bg="#4CAF50", fg="white", font=("Arial", 10)).grid(row=1, column=3, padx=5, pady=5)
 
-# Buttons Section
 button_frame = LabelFrame(root, text="Actions", bg="#f0f0f0", font=("Arial", 12, "bold"), padx=10, pady=10)
 button_frame.pack(fill="x", padx=20, pady=10)
 
 tk.Button(button_frame, text="Color Map", command=color_map_func, bg="#008CBA", fg="white", font=("Arial", 10), width=15).pack(side="left", padx=10)
 tk.Button(button_frame, text="Save Map", command=save_map, bg="#f44336", fg="white", font=("Arial", 10), width=15).pack(side="right", padx=10)
 
-# Graph Display Section
 graph_frame = LabelFrame(root, text="Graph Display", bg="#f0f0f0", font=("Arial", 12, "bold"), padx=10, pady=10)
 graph_frame.pack(fill="both", expand=True, padx=20, pady=10)
 
@@ -116,5 +139,5 @@ canvas = FigureCanvasTkAgg(fig, master=graph_frame)
 canvas_widget = canvas.get_tk_widget()
 canvas_widget.pack(fill="both", expand=True)
 
-# Run the main loop
+# Start the GUI event loop
 root.mainloop()
