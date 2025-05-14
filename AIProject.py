@@ -3,6 +3,7 @@ from tkinter import messagebox, LabelFrame
 import networkx as nx
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import random
 
 # Create the main window
 root = tk.Tk()
@@ -75,19 +76,62 @@ def backtrack(assignment, nodes):
             del assignment[node]
     return None
 
+# Greedy Coloring Algorithm
+def greedy_coloring():
+    assignment = {}
+    for node in G.nodes:
+        neighbor_colors = {assignment[neighbor] for neighbor in G.neighbors(node) if neighbor in assignment}
+        for color in range(len(colors)):
+            if color not in neighbor_colors:
+                assignment[node] = color
+                break
+        else:
+            return None
+    return assignment
+
+# Min-Conflicts Algorithm
+def min_conflicts(max_steps=1000):
+    nodes = list(G.nodes)
+    assignment = {node: random.randint(0, len(colors) - 1) for node in nodes}
+
+    for _ in range(max_steps):
+        conflicted = [node for node in nodes if any(assignment[node] == assignment[n] for n in G.neighbors(node))]
+        if not conflicted:
+            return assignment
+
+        node = random.choice(conflicted)
+        min_conflict_color = min(
+            range(len(colors)),
+            key=lambda c: sum(1 for n in G.neighbors(node) if assignment[n] == c)
+        )
+        assignment[node] = min_conflict_color
+
+    return None
+
+# Color map function using selected algorithm
 def color_map_func():
     global color_map
     if not G.nodes:
         messagebox.showwarning("Empty Map", "Please add regions and borders first.")
         return
 
-    assignment = backtrack({}, list(G.nodes))
+    algo = algorithm_var.get()
+
+    if algo == "Backtracking":
+        assignment = backtrack({}, list(G.nodes))
+    elif algo == "Greedy":
+        assignment = greedy_coloring()
+    elif algo == "Min-Conflicts":
+        assignment = min_conflicts()
+    else:
+        messagebox.showerror("Algorithm Error", "Unknown algorithm selected.")
+        return
+
     if assignment is None:
-        messagebox.showerror("CSP Failed", "Unable to color the map with the given colors.")
+        messagebox.showerror("Coloring Failed", "Unable to color the map with the selected algorithm.")
         return
 
     color_map = assignment
-
     node_colors = [colors[color_map[node]] for node in G.nodes]
     ax.clear()
     pos = nx.spring_layout(G)
@@ -127,6 +171,10 @@ tk.Button(input_frame, text="Add", command=add_border, bg="#4CAF50", fg="white",
 
 button_frame = LabelFrame(root, text="Actions", bg="#f0f0f0", font=("Arial", 12, "bold"), padx=10, pady=10)
 button_frame.pack(fill="x", padx=20, pady=10)
+
+algorithm_var = tk.StringVar(value="Backtracking")
+tk.Label(button_frame, text="Select Algorithm:", bg="#f0f0f0", font=("Arial", 10)).pack(side="left", padx=5)
+tk.OptionMenu(button_frame, algorithm_var, "Backtracking", "Greedy", "Min-Conflicts").pack(side="left", padx=5)
 
 tk.Button(button_frame, text="Color Map", command=color_map_func, bg="#008CBA", fg="white", font=("Arial", 10), width=15).pack(side="left", padx=10)
 tk.Button(button_frame, text="Save Map", command=save_map, bg="#f44336", fg="white", font=("Arial", 10), width=15).pack(side="right", padx=10)
